@@ -45,6 +45,19 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Added dark mode support with data-theme attribute */
+[data-theme="dark"] {
+    --bg-primary: var(--dark-bg);
+    --text-primary: var(--text-light);
+    --text-secondary: var(--gray-400);
+}
+
+[data-theme="light"] {
+    --bg-primary: var(--light-bg);
+    --text-primary: var(--text-dark);
+    --text-secondary: var(--text-muted);
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --bg-primary: var(--dark-bg);
@@ -110,6 +123,13 @@ body {
     color: var(--accent);
 }
 
+/* Added styles for nav-right container and dark mode toggle */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -127,9 +147,32 @@ body {
     color: var(--primary);
 }
 
+/* Added dark mode toggle button styling */
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
+    }
+    
+    .nav-right {
+        gap: var(--spacing-md);
     }
 }
 
@@ -152,6 +195,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* Updated profile image styling for actual avatar image */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: var(--spacing-lg);
+    object-fit: cover;
+    border: 4px solid var(--primary);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
 }
 
 .profile-image-placeholder {
@@ -552,8 +606,9 @@ body {
 }
 
 .contact-info {
-    display: flex;
-    flex-direction: column;
+    /* Changed to use auto-fit grid layout like certifications-list for items side-by-side */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-lg);
 }
 
@@ -562,6 +617,14 @@ body {
     background-color: rgba(59, 130, 246, 0.05);
     border-radius: var(--radius-lg);
     border-left: 4px solid var(--primary);
+    transition: var(--transition);
+}
+
+/* Added hover effect for better interactivity */
+.info-item:hover {
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+    transform: translateY(-5px);
+    border-color: var(--accent);
 }
 
 .info-item h4 {
@@ -681,6 +744,11 @@ body {
 
     .subtitle {
         font-size: 1.25rem;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
     }
 
     .profile-image-placeholder {

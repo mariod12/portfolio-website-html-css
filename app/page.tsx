@@ -1,10 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './styles.css';
 
 export default function Home() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const darkModeEnabled = savedMode ? JSON.parse(savedMode) : prefersDark;
+    
+    setIsDarkMode(darkModeEnabled);
+    if (darkModeEnabled) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
     // Form handling for frontend-only contact form
     const contactForm = document.getElementById('contactForm') as HTMLFormElement;
 
@@ -73,6 +84,18 @@ export default function Home() {
     });
   }, []);
 
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+    
+    if (newDarkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  };
+
   return (
     <>
       {/* Navigation */}
@@ -82,23 +105,26 @@ export default function Home() {
             <a href="#home" className="logo">
               Mario Villanueva
             </a>
-            <ul className="nav-links">
-              <li>
-                <a href="#home">Home</a>
-              </li>
-              <li>
-                <a href="#about">About</a>
-              </li>
-              <li>
-                <a href="#skills">Skills</a>
-              </li>
-              <li>
-                <a href="#education">Education</a>
-              </li>
-              <li>
-                <a href="#contact">Contact</a>
-              </li>
-            </ul>
+            <div className="nav-right">
+              <ul className="nav-links">
+                <li>
+                  <a href="#home">Home</a>
+                </li>
+                <li>
+                  <a href="#about">About</a>
+                </li>
+                <li>
+                  <a href="#skills">Skills</a>
+                </li>
+                <li>
+                  <a href="#education">Education</a>
+                </li>
+                <li>
+                  <a href="#contact">Contact</a>
+                </li>
+              </ul>
+              
+            </div>
           </div>
         </div>
       </nav>
@@ -108,15 +134,15 @@ export default function Home() {
         <div className="container">
           <div className="hero-content">
             <div className="profile-section">
-              <div className="profile-image-placeholder">👨‍💻</div>
+              <img src="/avatar.jpg" alt="Mario Villanueva" className="profile-image" />
               <h1>Mario Villanueva</h1>
-              <p className="subtitle">Systems Engineering Graduate</p>
+              <p className="subtitle">Systems Engineer</p>
               <div className="hero-buttons">
                 <a href="#contact" className="btn btn-primary">
                   Get in Touch
                 </a>
-                <a href="#" className="btn btn-secondary">
-                  Download CV
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                  GitHub
                 </a>
               </div>
             </div>
@@ -210,13 +236,13 @@ export default function Home() {
       {/* Education Section */}
       <section id="education" className="education">
         <div className="container">
-          <h2>Education & Certifications</h2>
+          
           <div className="education-content">
             <div className="education-item main">
               <div className="edu-icon">🎓</div>
               <div className="edu-details">
                 <h3>BSc in Systems Engineering</h3>
-                <p className="institution">UNAH - National Autonomous University of Honduras</p>
+                <p className="institution">UNAH - Universidad Nacional Autónoma de Honduras</p>
                 <p className="description">
                   Comprehensive education in software development, database design, and IT systems
                 </p>
@@ -238,6 +264,10 @@ export default function Home() {
                 <span className="cert-provider">Infop</span>
               </div>
               <div className="cert-item">
+                <span className="cert-name">HTML Web desing</span>
+                <span className="cert-provider">Infop</span>
+              </div>
+              <div className="cert-item">
                 <span className="cert-name">Communicative English</span>
                 <span className="cert-provider">UJCV</span>
               </div>
@@ -246,7 +276,7 @@ export default function Home() {
                 <span className="cert-provider">HP Life</span>
               </div>
               <div className="cert-item">
-                <span className="cert-name">Strategic Planning</span>
+                <span className="cert-name">Stragic planning</span>
                 <span className="cert-provider">HP Life</span>
               </div>
             </div>
@@ -262,40 +292,23 @@ export default function Home() {
             I&apos;d love to hear from you. Feel free to reach out for opportunities or just to say hello!
           </p>
 
-          <div className="contact-wrapper">
-            <div className="contact-info">
-              <div className="info-item">
-                <h4>Email</h4>
-                <a href="mailto:mariobarrimb@gmail.com">mariobarrimb@gmail.com</a>
-              </div>
-              <div className="info-item">
-                <h4>Phone</h4>
-                <a href="tel:+5049610-8198">+504 9610-8198</a>
-              </div>
-              <div className="info-item">
-                <h4>Location</h4>
-                <p>Honduras, Tegucigalpa</p>
-              </div>
+          <div className="contact-info certifications-list">
+            <div className="info-item cert-item">
+              <h4>Email</h4>
+              <a href="mailto:mariobarrimb@gmail.com">mariobarrimb@gmail.com</a>
             </div>
-
-            <form className="contact-form" id="contactForm">
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" name="name" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea id="message" name="message" rows={5} required></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Send Message
-              </button>
-              <p className="form-note">Note: This is a frontend-only form for demonstration purposes.</p>
-            </form>
+            <div className="info-item cert-item">
+              <h4>WhatsApp</h4>
+              <a href="https://wa.me/50496108198" target="_blank" rel="noopener noreferrer">+504 9610-8198</a>
+            </div>
+            <div className="info-item cert-item">
+              <h4>LinkedIn</h4>
+              <a href="https://www.linkedin.com/in/mario-villanueva-026955257/" target="_blank" rel="noopener noreferrer">View Profile</a>
+            </div>
+            <div className="info-item cert-item">
+              <h4>Location</h4>
+              <p>Honduras, Tegucigalpa</p>
+            </div>
           </div>
         </div>
       </section>
