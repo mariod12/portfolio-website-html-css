@@ -1,100 +1,100 @@
-'use client';
+"use client"
 
-import { useEffect, useState } from 'react';
-import './styles.css';
+import { useEffect, useState } from "react"
+import "./styles.css"
 
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const darkModeEnabled = savedMode ? JSON.parse(savedMode) : prefersDark;
-    
-    setIsDarkMode(darkModeEnabled);
+    const savedMode = localStorage.getItem("darkMode")
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    const darkModeEnabled = savedMode ? JSON.parse(savedMode) : prefersDark
+
+    setIsDarkMode(darkModeEnabled)
     if (darkModeEnabled) {
-      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.setAttribute("data-theme", "dark")
     }
 
     // Form handling for frontend-only contact form
-    const contactForm = document.getElementById('contactForm') as HTMLFormElement;
+    const contactForm = document.getElementById("contactForm") as HTMLFormElement
 
     if (contactForm) {
-      contactForm.addEventListener('submit', function (e: Event) {
-        e.preventDefault();
+      contactForm.addEventListener("submit", (e: Event) => {
+        e.preventDefault()
 
         // Get form values
-        const nameInput = document.getElementById('name') as HTMLInputElement;
-        const emailInput = document.getElementById('email') as HTMLInputElement;
-        const messageInput = document.getElementById('message') as HTMLTextAreaElement;
+        const nameInput = document.getElementById("name") as HTMLInputElement
+        const emailInput = document.getElementById("email") as HTMLInputElement
+        const messageInput = document.getElementById("message") as HTMLTextAreaElement
 
-        const name = nameInput?.value;
-        const email = emailInput?.value;
-        const message = messageInput?.value;
+        const name = nameInput?.value
+        const email = emailInput?.value
+        const message = messageInput?.value
 
         // Simple validation
         if (!name || !email || !message) {
-          alert('Please fill in all fields');
-          return;
+          alert("Please fill in all fields")
+          return
         }
 
         // Show success message (frontend only)
-        alert(
-          `Thank you, ${name}! Your message has been received. I'll get back to you at ${email} soon.`
-        );
+        alert(`Thank you, ${name}! Your message has been received. I'll get back to you at ${email} soon.`)
 
         // Reset form
-        contactForm.reset();
-      });
+        contactForm.reset()
+      })
     }
 
     // Smooth scroll behavior (enhanced)
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener('click', function (e: Event) {
-        const href = (this as HTMLAnchorElement).getAttribute('href');
-        if (href !== '#' && document.querySelector(href)) {
-          e.preventDefault();
+      anchor.addEventListener("click", function (e: Event) {
+        const href = (this as HTMLAnchorElement).getAttribute("href")
+        if (href !== "#" && document.querySelector(href)) {
+          e.preventDefault()
           document.querySelector(href)?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
+            behavior: "smooth",
+            block: "start",
+          })
         }
-      });
-    });
+      })
+    })
 
     // Add animation on scroll
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px',
-    };
+      rootMargin: "0px 0px -100px 0px",
+    }
 
-    const observer = new IntersectionObserver(function (entries) {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          (entry.target as HTMLElement).style.animation = 'fadeInUp 0.6s ease-out forwards';
-          observer.unobserve(entry.target);
+          ;(entry.target as HTMLElement).style.animation = "fadeInUp 0.6s ease-out forwards"
+          observer.unobserve(entry.target)
         }
-      });
-    }, observerOptions);
+      })
+    }, observerOptions)
 
-    // Observe skill cards and education items
-    document.querySelectorAll('.skill-card, .skill-item, .cert-item, .education-item, .language-card').forEach((el) => {
-      (el as HTMLElement).style.opacity = '0';
-      observer.observe(el);
-    });
-  }, []);
+    // Observe skill cards, education items, and project cards
+    document
+      .querySelectorAll(".skill-card, .skill-item, .cert-item, .education-item, .language-card, .project-card")
+      .forEach((el) => {
+        ;(el as HTMLElement).style.opacity = "0"
+        observer.observe(el)
+      })
+  }, [])
 
   const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode;
-    setIsDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
-    
+    const newDarkMode = !isDarkMode
+    setIsDarkMode(newDarkMode)
+    localStorage.setItem("darkMode", JSON.stringify(newDarkMode))
+
     if (newDarkMode) {
-      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.setAttribute("data-theme", "dark")
     } else {
-      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.removeAttribute("data-theme")
     }
-  };
+  }
 
   return (
     <>
@@ -120,10 +120,12 @@ export default function Home() {
                   <a href="#education">Education</a>
                 </li>
                 <li>
+                  <a href="#projects">Projects</a>
+                </li>
+                <li>
                   <a href="#contact">Contact</a>
                 </li>
               </ul>
-              
             </div>
           </div>
         </div>
@@ -157,14 +159,14 @@ export default function Home() {
           <div className="about-content">
             <div className="about-text">
               <p>
-                I&apos;m a Systems Engineering graduate from UNAH with a strong foundation in software
-                development and database management. I&apos;m passionate about building scalable solutions and
-                solving complex technical challenges.
+                I&apos;m a Systems Engineering graduate from UNAH with a strong foundation in software development and
+                database management. I&apos;m passionate about building scalable solutions and solving complex technical
+                challenges.
               </p>
               <p>
-                My approach combines responsibility, adaptability, and problem-solving skills to deliver
-                high-quality work. I&apos;m always eager to learn new technologies and best practices in the
-                ever-evolving tech landscape.
+                My approach combines responsibility, adaptability, and problem-solving skills to deliver high-quality
+                work. I&apos;m always eager to learn new technologies and best practices in the ever-evolving tech
+                landscape.
               </p>
             </div>
             <div className="traits">
@@ -216,6 +218,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Projects Section */}
+      <section className="projects">
+        <div className="container">
+          <h2>Projects</h2>
+          <div className="projects-grid">
+            <div className="project-card">
+              <div className="project-image">
+                <img src="/tienda-ropa.png" alt="Clothing Store System" />
+              </div>
+              <div className="project-content">
+                <h3>Clothing Store System</h3>
+                <p className="project-subtitle">Multi-Branch Billing and Management System</p>
+                <p className="project-description">
+                  Desktop system for clothing stores with multiple branches, developed in C# (.NET Framework) and SQL
+                  Server (with partial Oracle support). Manages products, customers, employees, and inventory by branch,
+                  controls sales, and optimizes operations through stored procedures.
+                </p>
+                <div className="project-tech">
+                  <span className="tech-tag">C#</span>
+                  <span className="tech-tag">.NET Framework</span>
+                  <span className="tech-tag">SQL Server</span>
+                  <span className="tech-tag">Oracle DB</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="project-card">
+              <div className="project-image">
+                <img src="/proyecto-telecomunicaciones.png" alt="Telecommunications Project" />
+              </div>
+              <div className="project-content">
+                <h3>Telecommunications Database Project</h3>
+                <p className="project-subtitle">Database II - Star Schema Implementation</p>
+                <p className="project-description">
+                  Academic Database project for the telecommunications sector, focused on designing and implementing a
+                  database with a star schema model. Includes ETL processes in SQL for data extraction, transformation,
+                  and loading, plus interactive Power BI dashboards for visualization and analysis of key performance
+                  indicators.
+                </p>
+                <div className="project-tech">
+                  <span className="tech-tag">SQL Server</span>
+                  <span className="tech-tag">ETL</span>
+                  <span className="tech-tag">Power BI</span>
+                  <span className="tech-tag">Star Schema</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Languages Section */}
       <section className="languages">
         <div className="container">
@@ -236,7 +289,7 @@ export default function Home() {
       {/* Education Section */}
       <section id="education" className="education">
         <div className="container">
-          
+          <h2>Education</h2>
           <div className="education-content">
             <div className="education-item main">
               <div className="edu-icon">🎓</div>
@@ -299,11 +352,19 @@ export default function Home() {
             </div>
             <div className="info-item cert-item">
               <h4>WhatsApp</h4>
-              <a href="https://wa.me/50496108198" target="_blank" rel="noopener noreferrer">+504 9610-8198</a>
+              <a href="https://wa.me/50496108198" target="_blank" rel="noopener noreferrer">
+                +504 9610-8198
+              </a>
             </div>
             <div className="info-item cert-item">
               <h4>LinkedIn</h4>
-              <a href="https://www.linkedin.com/in/mario-villanueva-026955257/" target="_blank" rel="noopener noreferrer">View Profile</a>
+              <a
+                href="https://www.linkedin.com/in/mario-villanueva-026955257/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Profile
+              </a>
             </div>
             <div className="info-item cert-item">
               <h4>Location</h4>
@@ -320,5 +381,5 @@ export default function Home() {
         </div>
       </footer>
     </>
-  );
+  )
 }
