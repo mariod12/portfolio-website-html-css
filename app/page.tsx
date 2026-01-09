@@ -382,7 +382,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 Mario Villanueva. All rights reserved.</p>
+          <p></p>
         </div>
       </footer>
     </>
