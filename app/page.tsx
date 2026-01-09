@@ -143,7 +143,12 @@ export default function Home() {
                 <a href="#contact" className="btn btn-primary">
                   Get in Touch
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                <a
+                  href="https://github.com/mariod12"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary"
+                >
                   GitHub
                 </a>
               </div>
